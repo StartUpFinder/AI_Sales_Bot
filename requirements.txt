@@ -3,3 +3,7 @@ beautifulsoup4
 pandas
 openai
 tldextract
+python-dotenv
+gspread
+oauth2client
+

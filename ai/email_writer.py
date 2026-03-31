@@ -3,31 +3,39 @@ from config import OPENAI_API_KEY
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-
-def generate_email(company, industry, snippet):
+def generate_email(company, analysis, offer):
 
     prompt = f"""
-Write a highly personalized cold email.
+Write a cold email.
 
 Company: {company}
-Industry: {industry}
 
-Website Info:
-{snippet}
+Insights:
+{analysis}
 
-Rules:
-- Mention something specific about the company
-- Suggest a relevant AI automation idea
-- Keep it human and natural
-- Max 100 words
-- No generic phrases
+Offer type:
+{offer}
 
-Examples:
-- Law → client intake automation
-- Ecom → support chatbot
-- SaaS → onboarding automation
+Context:
+I built small AI systems for businesses like this.
 
-End with a question.
+Solutions:
+- feedback → customer feedback analytics
+- chatbot → AI support chatbot
+- dashboard → AI data dashboard
+
+Instructions:
+- Start with real observation
+- Identify ONE problem
+- Suggest ONE solution
+- Mention demo
+- 60-80 words
+- human tone
+- no sales language
+- end with question
+
+Before writing:
+Think about the company's pain point.
 """
 
     res = client.chat.completions.create(

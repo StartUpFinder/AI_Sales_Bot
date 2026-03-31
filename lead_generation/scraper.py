@@ -4,12 +4,6 @@ from bs4 import BeautifulSoup
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 
-def clean_google_url(href):
-    if href.startswith("/url?q="):
-        return href.split("/url?q=")[1].split("&")[0]
-    return None
-
-
 def search_google(query):
     url = f"https://www.google.com/search?q={query}"
     res = requests.get(url, headers=HEADERS)
@@ -20,10 +14,11 @@ def search_google(query):
 
     for a in soup.select("a"):
         href = a.get("href")
-        clean = clean_google_url(href) if href else None
+        if href and "/url?q=" in href:
+            clean = href.split("/url?q=")[1].split("&")[0]
 
-        if clean and not any(x in clean for x in ["google", "youtube"]):
-            links.append(clean)
+            if "google" not in clean and "youtube" not in clean:
+                links.append(clean)
 
     return list(set(links))[:10]
 
@@ -35,24 +30,29 @@ def extract_company_info(url):
 
         title = soup.title.string if soup.title else url
 
-        return {
-            "name": title.strip(),
-            "website": url
-        }
+        return {"name": title.strip(), "website": url}
 
     except:
         return None
 
 
-def extract_text_snippet(url):
+def extract_full_text(url):
     try:
-        res = requests.get(url, timeout=5)
+        res = requests.get(url, timeout=8, headers=HEADERS)
         soup = BeautifulSoup(res.text, "html.parser")
 
-        paragraphs = soup.find_all("p")
-        text = " ".join([p.get_text() for p in paragraphs[:5]])
+        for tag in soup(["script", "style"]):
+            tag.extract()
 
-        return text[:1000]
+        text = soup.get_text(separator=" ")
+        return " ".join(text.split())[:5000]
 
     except:
         return ""
+
+
+def is_small_business(text):
+
+    keywords = ["about", "team", "agency", "startup", "company"]
+
+    return any(k in text.lower() for k in keywords)

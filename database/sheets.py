@@ -1,5 +1,6 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from config import GOOGLE_SHEET_NAME
 
 def connect_sheet():
 
@@ -13,7 +14,7 @@ def connect_sheet():
     )
 
     client = gspread.authorize(creds)
-    sheet = client.open("Leads").sheet1
+    sheet = client.open(GOOGLE_SHEET_NAME).sheet1
 
     return sheet
 
@@ -23,6 +24,7 @@ def get_all_data(sheet):
 
 
 def find_existing(sheet, email):
+
     records = sheet.get_all_records()
 
     for idx, row in enumerate(records, start=2):
@@ -33,17 +35,12 @@ def find_existing(sheet, email):
 
 
 def save_or_update(sheet, data):
-    """
-    data = [Company, Website, Industry, Email, Status]
-    """
 
     row_index = find_existing(sheet, data[3])
 
     if row_index:
-        # Update existing row
-        sheet.update(f"A{row_index}:E{row_index}", [data])
+        sheet.update(f"A{row_index}:I{row_index}", [data])
         return "updated"
-
     else:
         sheet.append_row(data)
         return "new"

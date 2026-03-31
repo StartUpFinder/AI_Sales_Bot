@@ -17,5 +17,20 @@ def extract_emails(url):
         return []
 
 
+def pick_best_email(emails):
+
+    if not emails:
+        return None
+
+    priority = ["ceo", "founder", "owner", "hello", "contact", "info"]
+
+    for p in priority:
+        for e in emails:
+            if p in e.lower():
+                return e
+
+    return emails[0]
+
+
 def guess_email(domain):
     return f"info@{domain}"
