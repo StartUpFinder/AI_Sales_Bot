@@ -1,8 +1,10 @@
+![Banner](AI_Sales_Bot_Banner.png)
+
 # 🚀 AI Sales Bot
 
-Find leads, analyze companies, and send personalized cold emails — automatically.
+Automate your entire outbound pipeline with AI.
 
-It eliminates manual prospecting, research, and cold emailing — turning your outbound workflow into a fully automated pipeline.
+Find leads, analyze companies, and send personalized cold emails — automatically.
 
 ---
 
