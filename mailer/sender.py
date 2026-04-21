@@ -6,11 +6,11 @@ from config import SMTP_EMAIL, SMTP_PASSWORD
 def generate_subject(offer):
 
     if offer == "feedback":
-        return "Quick thought about your customer feedback"
+        return "Quick thought on your customer feedback"
     elif offer == "chatbot":
         return "Quick idea for your support flow"
     elif offer == "dashboard":
-        return "Small idea about your data"
+        return "Quick idea on your data setup"
 
     return "Quick idea"
 
@@ -19,7 +19,18 @@ def send_email(to_email, body, tracking_id, subject):
 
     tracking_pixel = f'<img src="https://yourdomain.com/open?id={tracking_id}" width="1" height="1"/>'
 
-    msg = MIMEText(body + tracking_pixel, "html")
+    full_body = f"""
+    <html>
+    <body>
+    {body}
+    <br><br>
+    Burak
+    {tracking_pixel}
+    </body>
+    </html>
+    """
+
+    msg = MIMEText(full_body, "html")
     msg["Subject"] = subject
     msg["From"] = SMTP_EMAIL
     msg["To"] = to_email
