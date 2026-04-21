@@ -1,6 +1,6 @@
 # 🚀 AI Sales Bot
 
-AI Sales Bot is an end-to-end **AI-powered outbound sales automation system** that finds, analyzes, and reaches out to potential customers with highly personalized emails.
+Find leads, analyze companies, and send personalized cold emails — automatically.
 
 It eliminates manual prospecting, research, and cold emailing — turning your outbound workflow into a fully automated pipeline.
 
