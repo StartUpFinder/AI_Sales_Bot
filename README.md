@@ -191,6 +191,10 @@ MAX_DELAY = 30
 
 ---
 
+## 📸 Demo
+
+![Demo](demo.png)
+
 ## 🚧 Roadmap
 
 * 📩 Email open & reply tracking
