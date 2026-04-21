@@ -1,108 +1,224 @@
-AI Sales Bot
+# 🚀 AI Sales Bot
 
-AI Sales Bot is a Python-based automation tool designed to send highly personalized cold emails to medium-sized companies (5–50 employees) in Europe and Turkey.
+AI Sales Bot is an end-to-end **AI-powered outbound sales automation system** that finds, analyzes, and reaches out to potential customers with highly personalized emails.
 
-The project covers lead generation, email automation, and Google Sheets database management.
+It eliminates manual prospecting, research, and cold emailing — turning your outbound workflow into a fully automated pipeline.
 
-⚠️ Web Search API integration is planned but not yet implemented. Currently, a simple Google scraper is used.
+---
 
-🔹 Features
+## 🧠 How It Works
 
-1️⃣ Lead Generation
-Currently uses Google scraping, but can be upgraded to a Web Search API (RapidAPI, Bing Search, or Google Programmable Search)
-Collects company information and website URLs
-Keyword-based searches by industry and location
+```text
+Lead Generation → Company Analysis → Email Discovery → AI Email Writing → Sending → Logging
+```
 
-2️⃣ Lead Enrichment
-Extract emails from company website (extract_emails)
-Guess email if none found (guess_email)
-Collect company name, website, and snippet text
+### 🔄 Full Workflow
 
-3️⃣ Database
-Stores data in Google Sheets
-Duplicate checking
-Status tracking (sent / failed / updated)
+1. **Lead Generation**
 
-4️⃣ Email Automation
-AI-generated personalized emails (generate_email)
-SMTP sending via Gmail or Outlook (send_email)
-Human-like style with company-specific details
+   * Finds companies via Apollo API
+   * Uses Google (SerpAPI) as a fallback source
 
-5️⃣ Tracking (PRO+ plan)
-Email opens and replies tracking (planned, not yet implemented)
+2. **Website Analysis**
 
+   * Scrapes company websites
+   * Filters for small businesses
 
-🔹 Project Structure
+3. **AI Analysis**
 
-AI_SALES_BOT/
+   * Extracts:
+
+     * Industry
+     * Pain points
+     * Language/tone
+
+4. **Offer Selection**
+
+   * Dynamically selects the best offer:
+
+     * Feedback system
+     * Chatbot
+     * Dashboard
+
+5. **Email Discovery**
+
+   * Finds decision-makers (CEO, HR, etc.)
+   * Includes generic emails (info@)
+   * Uses multiple sources + verification
+
+6. **Personalized Email Generation**
+
+   * Generates a unique AI email for each contact
+
+7. **Sending & Tracking**
+
+   * Sends emails
+   * Adds tracking ID
+   * Logs results into Google Sheets
+
+---
+
+## 🏗️ Project Structure
+
+```text
+AI_Sales_Bot/
 │
-├── main.py                  # Main script
-├── config.py                # Settings & keyword lists
-├── ai/
-│   └── email_writer.py      # AI-powered email generator
-├── database/
-│   └── sheets.py            # Google Sheets connection & storage
-├── email/
-│   └── sender.py            # SMTP sending
-├── enrichment/
-│   └── email_finder.py      # Email extraction / guessing
+├── main.py                  # Main orchestrator
+│
 ├── lead_generation/
-│   ├── scraper.py           # Google scraper (temporary)
-└── config.py                # Lead generation settings
-└── credentials.json         # Google sheet connection
+│   └── scraper.py          # Apollo + Google lead generation
+│
+├── enrichment/
+│   └── email_finder.py     # Email discovery & verification
+│
+├── ai/
+│   ├── analyzer.py         # Company analysis
+│   ├── offer_selector.py   # Offer selection
+│   └── email_writer.py     # Email generation
+│
+├── mailer/
+│   └── sender.py           # Email sending
+│
+├── database/
+│   └── sheets.py           # Google Sheets integration
+│
+├── config.py
+└── .env
+```
 
-🔹 Requirements
+---
 
-Python 3.10+
-Google Sheets API enabled & credentials.json for service account
-OpenAI API Key
-Gmail or Outlook SMTP account
+## ⚙️ Installation
 
-Python packages:
+### 1. Clone the repository
 
-pip install -r requirements.txt
-
-Example requirements.txt:
-
-openai
-gspread
-oauth2client
-requests
-beautifulsoup4
-
-
-🔹 Setup
-
-Clone the project:
-git clone https://github.com/username/AI_Sales_Bot.git
+```bash
+git clone https://github.com/yourusername/AI_Sales_Bot.git
 cd AI_Sales_Bot
-Create & activate a virtual environment:
-python -m venv .venv
+```
 
-.venv\Scripts\activate      # Windows
-# or
+### 2. Install dependencies
 
-source .venv/bin/activate   # Mac/Linux
-Install dependencies:
+```bash
 pip install -r requirements.txt
-Add your credentials.json for Google Sheets service account.
-Configure config.py with your SMTP credentials and OpenAI API key.
-Create a Google Sheet named Leads with these column headers:
-Company | Website | Industry | Email | Status
+```
 
-🔹 Running the Bot
+### 3. Create a `.env` file
+
+```env
+OPENAI_API_KEY=
+APOLLO_API_KEY=
+SERPAPI_KEY=
+HUNTER_API_KEY=
+SNOV_API_KEY=
+ABSTRACT_API_KEY=
+
+EMAIL_HOST=
+EMAIL_PORT=
+EMAIL_USER=
+EMAIL_PASS=
+```
+
+---
+
+## ▶️ Usage
+
+```bash
 python main.py
-Currently, the bot uses a simple scraper to find links.
-If no links are found, the Sheet will remain empty.
-Integration with Web Search API will dramatically improve response rate and reliability.
+```
 
-🔹 Future / PRO+ Upgrades
-Web Search API integration → RapidAPI, Bing, or Google Programmable Search
-Email open & reply tracking
-Advanced AI email generation → using company snippet analysis and demo project references
-Response rate optimization → throttling, delays, and A/B testing
+Once started, the bot will:
 
-🔹 Usage Tips
-Test with 5–10 keywords first.
-Verify that emails are being sent and data is written to the Sheet before scaling.
-PRO+ with Web Search API will increase response rates significantly.
+* Discover companies
+* Analyze them
+* Generate and send emails
+* Log everything into Google Sheets
+
+---
+
+## 📊 Features
+
+### 🤖 AI-Powered
+
+* Company analysis (LLM-based)
+* Dynamic offer selection
+* Personalized email generation
+
+### 🎯 Lead Generation
+
+* Apollo API integration
+* Google fallback (SerpAPI)
+
+### 📬 Email Intelligence
+
+* Multi-source email discovery
+* Email verification (Hunter + Abstract)
+* Scoring system
+
+### 📈 Tracking
+
+* Google Sheets logging
+* Duplicate prevention
+* Unique tracking IDs
+
+### ⚡ Smart Sending System
+
+* Daily sending limits
+* Random delays (anti-spam)
+
+---
+
+## 🧩 Configuration
+
+Adjust settings via `config.py`:
+
+```python
+APOLLO_KEYWORDS = [...]
+GOOGLE_KEYWORDS = [...]
+DAILY_LIMIT = 50
+MIN_DELAY = 10
+MAX_DELAY = 30
+```
+
+---
+
+## 🛡️ Best Practices
+
+* Built-in rate limiting
+* Duplicate email prevention
+* API fallback mechanisms
+* Optimized for free-tier API usage
+
+---
+
+## 🚧 Roadmap
+
+* 📩 Email open & reply tracking
+* 🌍 Multi-language support
+* 🧠 CRM integrations
+* 📊 Analytics dashboard
+* 🔁 Automated follow-ups
+
+---
+
+## 📌 Use Cases
+
+This project is ideal for:
+
+* SaaS founders
+* Growth hackers
+* Agencies
+
+Looking to scale outbound sales **10x faster** with AI.
+
+---
+
+## 🧑‍💻 Contributing
+
+Pull requests and contributions are welcome.
+
+---
+
+## 📜 License
+
+MIT License
